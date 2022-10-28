@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,20 @@
   to {
     transform: rotate(360deg);
   }
+}
+ //Navigation Style
+.nav-unordered-list {
+  margin: 0;
+  paddding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 3px;
+  color: red;
+  list-style: none;
+}
+
+.nav-list {
+  color: green;
+  /* text-decoration: none; */
 }
