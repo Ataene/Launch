@@ -1,30 +1,37 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react'
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+// import Postal from "../components/Postal";
 
 const Universities = () => {
 
-  const [ university, setUniversity ] = useState([]);
-  const [ country, setCountry ] = useState("")
-  const dataUri = `http://universities.hipolabs.com/search?country=${country}`
+  const[ loading, setLoading ] = useState("")
+  // const[ error, setError ] = useState("")
+  const [university, setUniversity] = useState([]);
+  const [country, setCountry] = useState("");
+  const dataUri = `http://universities.hipolabs.com/search?country=Canada`;
 
-  const getUniversity = async () => {
-    try {
-      const response = await fetch(dataUri);
-      let data = await response.json();
-      setUniversity(data);
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
+  //Display the list of country, Pending and Error states not handle yet.
+  
   useEffect(() => {
-    getUniversity()
+    const getUniversity = async () => {
+      try {
+        const response = await fetch(dataUri);
+        let data = await response.json();
+        setUniversity(data);
+        setCountry("");
+        setLoading("")
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getUniversity();
   }, []);
   return (
     <div>
-       <div>
-        {university.map((item) => (
+      <div>
+        <h1 style={{ color: "orange" }}>Limit of two items</h1>
+        {university.slice(0, 2).map((item) => (
           <div key={item.id}>
             <hi
               style={{
@@ -64,10 +71,10 @@ const Universities = () => {
           display: "flex",
           marginBottom: 20,
         }}
-      >
-      </div>
+      ></div>
+      {/* <Postal /> */}
     </div>
-  )
-}
+  );
+};
 
-export default Universities
+export default Universities;

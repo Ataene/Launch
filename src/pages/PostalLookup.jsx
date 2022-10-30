@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Modal from "../components/Modal";
+import { searchPostal } from "../redux/ActionCreators";
 
 const PostalLookup = () => {
-  const [postalCode, setPostalCode] = useState([]);
+  const postalData = useSelector((state) => state.postalInfo);
+  const allState = useSelector((state) => state)
+  console.log(allState)
+  const dispatch = useDispatch();
   const [code, setCode] = useState("");
-  const dataUri = `https://api.zippopotam.us/us/${code}`;
 
   const handleSubmit = async (event) => {
     if (event.key === "Enter") {
-      try {
-        const response = await fetch(dataUri);
-        let data = await response.json();
-        setPostalCode(data);
-        setCode("");
-
-      } catch (error) {
-        console.log(error.message);
-      }
+      dispatch(searchPostal(code));
     }
   };
-  console.log("111", postalCode)
-
-  useEffect(() => {
-    handleSubmit();
-  }, []);
 
   return (
     <>
@@ -34,15 +26,19 @@ const PostalLookup = () => {
         onChange={(e) => {
           setCode(e.target.value);
         }}
-        onKeyDown={handleSubmit}
+        onKeyUp={handleSubmit}
       />
       <div>
-        <p>Country: {postalCode.country}</p>
-        <p>Abbreviation: {postalCode["country abbreviation"]}</p>
-        <p>State: {postalCode.places[0].state}</p>
-        <p>Longitude: {postalCode.places[0].longitude}</p>
-        <p>Latitude: {postalCode.places[0].latitude}</p>
-        <p>Place: {postalCode.places[0]["place name"]}</p>
+        {postalData && (
+          <>
+            <p>Country: {postalData.country}</p>
+            <p>Abbreviation: {postalData["country abbreviation"]}</p>
+            <p>State: {postalData.places[0].state}</p>
+            <p>Longitude: {postalData.places[0].longitude}</p>
+            <p>Latitude{postalData.places[0].latitude}</p>
+            <p>Place: {postalData.places[0]["place name"]}</p>
+          </>
+        )}
       </div>
     </>
   );

@@ -1,52 +1,51 @@
 import { ActionTypes } from "./ActionTypes";
 
-export const fetchItem = () => {
-  const dataUrl = `https://jsonplaceholder.typicode.com/posts? _start=0&_limit=20`;
+
+//HOME PAGE
+export const fetchItems = () => {
+  const dataUrl = `https://jsonplaceholder.typicode.com/posts? _start=0&_limit=20`; 
+
   return async (dispatch) => {
     try {
       const response = await fetch(dataUrl);
       let responseData = await response.json();
-      dispatch({ type: ActionTypes.FETCH_ITEMS, payload: responseData.data });
+
+      dispatch({ type: ActionTypes.FETCH_ITEMS, payload: responseData });
     } catch (error) {
       console.log(error.message);
     }
   };
 };
 
-//Single product with an Id
-export const fetchItems = (id) => {
-    const dataUrl = `https://jsonplaceholder.typicode.com/posts? _start=0&_limit=20/${id}`;
+export const fetchItem = (id) => {
+  const dataUrl = `https://jsonplaceholder.typicode.com/posts/${id}`;
+  return async (dispatch) => {
+    try {
+      const response = await fetch(dataUrl);
+      let responseData = await response.json();
+      dispatch({ type: ActionTypes.FETCH_ITEM, payload: responseData });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+///SEARCH POSTAL CODE
+
+export const searchPostal = (postal) => {
+    const dataUrl = `https://api.zippopotam.us/us/${postal}`; 
+  
     return async (dispatch) => {
       try {
         const response = await fetch(dataUrl);
         let responseData = await response.json();
-        dispatch({ type: ActionTypes.SELECTED_ITEM, payload: responseData.data });
+        dispatch({ type: ActionTypes.SEARCH_POSTAL, payload: responseData });
       } catch (error) {
         console.log(error.message);
       }
     };
   };
 
-export const getItem = (item) => {
-  return {
-    type: ActionTypes.SET_ITEMS,
-    payload: item,
-  };
-};
-
-export const setItem = (item) => {
-  return {
-    type: ActionTypes.SET_ITEMS,
-    payload: item,
-  };
-};
-
-export const selectedItem = (item) => {
-  return {
-    type: ActionTypes.SELECTED_ITEM,
-    payload: item,
-  };
-};
 
 export const updateSelectedItem = (item) => {
   return {
@@ -55,7 +54,7 @@ export const updateSelectedItem = (item) => {
   };
 };
 
-export const removeSelectedItem = () => {
+export const deleteSelectedItem = () => {
   return {
     type: ActionTypes.DELETE_SELECTED_ITEM,
   };
