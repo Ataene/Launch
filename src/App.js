@@ -6,16 +6,19 @@ import Universities from "./pages/Universities";
 // import Footer from "./components/Footer";
 import PostalLookup from "./pages/PostalLookup";
 
+
 function App() {
   return (
     <>
-      <Navigations />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/universities" element={<Universities />} />
-        <Route path="/postalLookup" element={<PostalLookup />} />
-      </Routes>
-      {/* <Footer /> */}
+    <div className="App">
+        <Navigations />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/universities" element={<Universities />} />
+          <Route path="/postalLookup" element={<PostalLookup />} />
+        </Routes>
+        {/* <Footer /> */}
+    </div>
     </>
   );
 }
